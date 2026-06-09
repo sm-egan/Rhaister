@@ -1,0 +1,28 @@
+{
+  "source_parquet": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260126.diverse.drugs.20.parquet",
+  "n_diverse_drugs": 20,
+  "diverse_drugs": [
+    "Abiraterone acetate",
+    "Acetazolamide",
+    "Aprepitant",
+    "Canagliflozin (hemihydrate)",
+    "Carbidopa (monohydrate)",
+    "Celecoxib",
+    "Citalopram (hydrobromide)",
+    "Darolutamide",
+    "Hesperidin",
+    "Idoxuridine",
+    "L-Eflornithine (monohydrochloride)",
+    "Levobupivacaine (hydrochloride)",
+    "Methyl aminolevulinate (hydrochloride)",
+    "Nafamostat (mesylate)",
+    "Phenytoin (sodium)",
+    "Quinidine (15% dihydroquinidine)",
+    "Tetracycline (hydrochloride)",
+    "Tolcapone",
+    "Verapamil",
+    "\u03b3-Oryzanol"
+  ],
+  "n_test_drugs": 359,
+  "n_test_treatments": 1077
+}

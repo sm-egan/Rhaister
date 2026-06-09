@@ -1,0 +1,97 @@
+# =============================================================================
+# PROJECT METADATA & DEPENDENCIES
+# =============================================================================
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rhaister"
+version = "0.1.0"
+description = "Perturbation response prediction across datasets and modalities"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.11"
+authors = [
+    {name = "Tahoe Bio"},
+]
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.0",
+    "polars>=1.0",
+    "pyarrow>=14.0",
+    "scipy>=1.12",
+    "scikit-learn>=1.4",
+    "torch>=2.2",
+    "wandb>=0.16",
+    "huggingface_hub>=0.20",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.11",
+    "pre-commit>=4.0",
+]
+data-prep = [
+    "anndata",
+    "pdex>=0.2",
+    "pyyaml",
+]
+
+# =============================================================================
+# TOOL CONFIGURATIONS
+# =============================================================================
+
+[tool.setuptools.packages.find]
+include = ["rhaister*"]
+
+[project.scripts]
+rhaister-train = "rhaister.train:_cli"
+rhaister-eval = "rhaister.eval_splits:_cli"
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    "build/**",
+    "*.ipynb",
+    ".venv/**",
+    "wandb/**",
+    "autoresearch/**",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "F",      # pyflakes
+    "I",      # isort
+    "UP",     # pyupgrade
+    "RUF",    # ruff-specific
+    "C4",     # flake8-comprehensions
+    "PERF",   # perflint
+    "SIM",    # flake8-simplify
+]
+ignore = [
+    "E501",    # line too long (handled by formatter)
+    "E402",    # module level import not at top of file
+    "RUF015",  # unnecessary iterable allocation for first element
+    "PERF401", # list comprehension over for-loop
+    "SIM401",  # dict.get instead of if-else
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"scripts/**" = ["E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--tb=short"
+
+[[tool.uv.index]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch" }

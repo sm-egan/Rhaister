@@ -1,0 +1,24 @@
+{
+  "source_file": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260202-alt-selections/high_effect_size_A.csv",
+  "n_training_drugs": 16,
+  "training_drugs": [
+    "9-ING-41",
+    "AZD2858",
+    "Auranofin",
+    "BAY1125976",
+    "Belzutifan",
+    "Bimiralisib",
+    "Dinaciclib",
+    "Docetaxel",
+    "Encorafenib",
+    "Erdafitinib",
+    "GSK1059615",
+    "LB-100",
+    "LY-2584702 (tosylate salt)",
+    "SBI-0640756",
+    "XRK3F2",
+    "olaparib"
+  ],
+  "n_test_drugs": 363,
+  "n_test_treatments": 1089
+}

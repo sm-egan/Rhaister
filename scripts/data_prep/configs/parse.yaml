@@ -1,0 +1,29 @@
+# Parse PBMC cytokine: 18 cell types x 12 donors x ~100 cytokines
+# Each h5ad file is one cell type with all donors and cytokines.
+# Pseudobulk is computed per (donor, cytokine) within each cell type,
+# with PBS as the control condition.
+
+dataset: parse
+
+h5ad_dir: /nvme-shared/Data/parse_pbmc/by_cell_type
+h5ad_pattern: "*.h5ad"
+
+treatment_col: cytokine
+control: PBS
+
+# Within each h5ad (one cell type), stratify by donor.
+group_col: donor
+
+# The cell type identity comes from the filename — carry it in output.
+file_id_col: cell_type
+
+pdex:
+  output_dir: /nvme-shared/Data/parse_pbmc/by_cell_type/pdex_results
+  threads: 24
+  n_workers: 8  # parallel workers over group_col values
+
+celleval:
+  output_dir: /nvme-shared/Data/parse_pbmc/by_cell_type/delta_results
+  gene_mode: all_genes
+  gene_name_col: null  # use var.index
+  target_sum: 3320  # dataset-wide median transcript count

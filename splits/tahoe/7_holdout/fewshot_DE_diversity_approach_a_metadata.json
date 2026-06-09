@@ -1,0 +1,27 @@
+{
+  "source_file": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260202-alt-selections/DE_diversity_approach_a_selected_drugs.csv",
+  "n_training_drugs": 19,
+  "training_drugs": [
+    "(R)-Verapamil (hydrochloride)",
+    "Acetohexamide",
+    "Bosentan (hydrate)",
+    "Celecoxib",
+    "Cepharanthine",
+    "DT-061",
+    "Elagolix sodium",
+    "Encorafenib",
+    "Fulvestrant",
+    "Ivabradine (hydrochloride)",
+    "Lapatinib ditosylate",
+    "Lonafarnib",
+    "Lucanthone",
+    "OTS514",
+    "Pemetrexed",
+    "Talc",
+    "Terfenadine",
+    "Vortioxetine",
+    "c-Kit-IN-1"
+  ],
+  "n_test_drugs": 360,
+  "n_test_treatments": 1080
+}

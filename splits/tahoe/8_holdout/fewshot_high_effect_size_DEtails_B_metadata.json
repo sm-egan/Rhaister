@@ -1,0 +1,28 @@
+{
+  "source_file": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260202-alt-selections/high_effect_size_DEtails_method_B.csv",
+  "n_training_drugs": 20,
+  "training_drugs": [
+    "Almonertinib (mesylate)",
+    "Atazanavir (sulfate)",
+    "Auranofin",
+    "BI-78D3",
+    "Binimetinib",
+    "Bortezomib",
+    "Daptomycin",
+    "Dinaciclib",
+    "LY-2584702 (tosylate salt)",
+    "Lonafarnib",
+    "MK-8353",
+    "Niclosamide (olamine)",
+    "Nimesulide",
+    "OTS514",
+    "Penfluridol",
+    "Piroxicam",
+    "Silodosin",
+    "Simotinib",
+    "Tolcapone",
+    "ULK-101"
+  ],
+  "n_test_drugs": 359,
+  "n_test_treatments": 1077
+}

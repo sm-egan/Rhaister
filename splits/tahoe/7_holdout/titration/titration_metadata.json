@@ -1,0 +1,31 @@
+{
+  "seed": 42,
+  "titration_levels": [
+    6
+  ],
+  "original_training_drugs": 99,
+  "nested_subsets": {
+    "6": [
+      "Artemether",
+      "Cloxacillin (sodium)",
+      "Doxycycline (monohydrate)",
+      "Ornidazole",
+      "Quinestrol",
+      "Torkinib"
+    ]
+  },
+  "excluded_drugs": [
+    "Carfilzomib",
+    "Crizotinib",
+    "Ixazomib",
+    "Palbociclib",
+    "Rapamycin",
+    "Ribociclib",
+    "Romidepsin",
+    "Selumetinib",
+    "Sorafenib",
+    "Temsirolimus",
+    "Trametinib",
+    "Vorinostat"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "source_file": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260204-selection/18_drugs_focused_diversity_train.csv",
+  "n_training_drugs": 6,
+  "training_drugs": [
+    "Abemaciclib",
+    "Bortezomib",
+    "Cobimetinib",
+    "Everolimus",
+    "Panobinostat",
+    "Sunitinib"
+  ],
+  "n_test_drugs": 373,
+  "n_test_treatments": 1119
+}

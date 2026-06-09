@@ -1,0 +1,28 @@
+{
+  "source_file": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260202-alt-selections/DE_diversity_approach_b_selected_drugs.csv",
+  "n_training_drugs": 20,
+  "training_drugs": [
+    "18\u03b2-Glycyrrhetinic acid",
+    "4EGI-1",
+    "9-ING-41",
+    "Allopurinol",
+    "Almonertinib (mesylate)",
+    "Benztropine (mesylate)",
+    "Cysteamine (hydrochloride)",
+    "Dorzolamide (hydrochloride)",
+    "Epirubicin (hydrochloride)",
+    "Erdafitinib",
+    "Glycyrrhizic acid",
+    "L-Eflornithine (monohydrochloride)",
+    "LB-100",
+    "Lucanthone",
+    "Mebendazole",
+    "Nafamostat (mesylate)",
+    "Ropivacaine (hydrochloride monohydrate)",
+    "SBI-0640756",
+    "Sunitinib",
+    "Talc"
+  ],
+  "n_test_drugs": 359,
+  "n_test_treatments": 1077
+}

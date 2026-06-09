@@ -1,0 +1,31 @@
+{
+  "seed": 42,
+  "titration_levels": [
+    6
+  ],
+  "original_training_drugs": 94,
+  "nested_subsets": {
+    "6": [
+      "Cytarabine (hydrochloride)",
+      "Doxorubicin (hydrochloride)",
+      "Mozavaptan",
+      "Nimesulide",
+      "Omeprazole",
+      "Pentagastrin"
+    ]
+  },
+  "excluded_drugs": [
+    "Carfilzomib",
+    "Crizotinib",
+    "Ixazomib",
+    "Palbociclib",
+    "Rapamycin",
+    "Ribociclib",
+    "Romidepsin",
+    "Selumetinib",
+    "Sorafenib",
+    "Temsirolimus",
+    "Trametinib",
+    "Vorinostat"
+  ]
+}

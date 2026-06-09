@@ -1,0 +1,39 @@
+# Replogle-Nadig CRISPR atlas dataset — portable definition.
+# 4 cell lines (HepG2, Jurkat, K562, RPE1) × ~2023 gene knockdowns.
+# pdex computed per gem_group (sequencing batch); the loader averages over
+# gem_groups via the (cell_line, target) pivot.
+# Data paths are relative to the dataset root. Set RHAISTER_DATA_ROOT to point
+# at a directory with per-dataset subdirectories. Without RHAISTER_DATA_ROOT,
+# data is auto-downloaded from HuggingFace.
+
+[data]
+pdex_path      = "pdex/all_pdex.parquet"
+cell_eval_path = "cell_eval/all_delta.parquet"
+
+# pdex's `feature` column holds integer indices ("0".."6545") into a fixed gene
+# list rather than gene symbols (unlike tahoe/parse). The loader uses this
+# JSON list to translate static_2k_genes.json -> int-string indices for the
+# parquet filter, and then renames `feature` back to gene symbols after read.
+feature_names_list = "feature_names.json"
+
+# Column mapping. Both pdex and delta already use `cell_line` as the cell
+# identifier; delta uses `gene` for the perturbation name (renamed to
+# `treatment` by the loader). pdex's `target` is already treatment-shaped.
+[data.columns]
+cell_line           = ["cell_line"]
+cell_eval_treatment = "gene"
+
+# A/B independent sub-samples for noise-ceiling calibration (scripts/eval_a_vs_b.py).
+[data.variants.A]
+pdex_path      = "a_vs_b/A/pdex/all_pdex.parquet"
+cell_eval_path = "a_vs_b/A/cell_eval/all_delta.parquet"
+
+[data.variants.B]
+pdex_path      = "a_vs_b/B/pdex/all_pdex.parquet"
+cell_eval_path = "a_vs_b/B/cell_eval/all_delta.parquet"
+
+[genes]
+static_list = "static_2k_genes.json"
+
+[splits]
+default_config = "split.toml"

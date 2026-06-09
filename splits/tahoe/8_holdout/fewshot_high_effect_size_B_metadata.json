@@ -1,0 +1,28 @@
+{
+  "source_file": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260202-alt-selections/high_effect_size_B.csv",
+  "n_training_drugs": 20,
+  "training_drugs": [
+    "9-ING-41",
+    "AZD2858",
+    "Auranofin",
+    "BAY1125976",
+    "Bimiralisib",
+    "Bortezomib",
+    "Dinaciclib",
+    "Docetaxel",
+    "Doxorubicin (hydrochloride)",
+    "Encorafenib",
+    "Erdafitinib",
+    "GSK1059615",
+    "Ipatasertib",
+    "LB-100",
+    "Lonafarnib",
+    "PF-06260933",
+    "PH-797804",
+    "SBI-0640756",
+    "XRK3F2",
+    "olaparib"
+  ],
+  "n_test_drugs": 359,
+  "n_test_treatments": 1077
+}

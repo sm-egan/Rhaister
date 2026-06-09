@@ -1,0 +1,31 @@
+{
+  "seed": 42,
+  "titration_levels": [
+    6
+  ],
+  "original_training_drugs": 94,
+  "nested_subsets": {
+    "6": [
+      "Darinaparsin",
+      "Dorzolamide (hydrochloride)",
+      "NVP-BHG712",
+      "PF-06260933",
+      "Palmatine (chloride)",
+      "Radotinib"
+    ]
+  },
+  "excluded_drugs": [
+    "Carfilzomib",
+    "Crizotinib",
+    "Ixazomib",
+    "Palbociclib",
+    "Rapamycin",
+    "Ribociclib",
+    "Romidepsin",
+    "Selumetinib",
+    "Sorafenib",
+    "Temsirolimus",
+    "Trametinib",
+    "Vorinostat"
+  ]
+}

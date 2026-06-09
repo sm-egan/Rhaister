@@ -1,0 +1,106 @@
+# Dataset paths - maps dataset names to their directories
+[datasets]
+parse = "/data/parse_final_concat"
+
+# Training specifications
+# All cell types in a dataset automatically go into training (excluding zeroshot/fewshot overrides)
+[training]
+parse = "train"
+
+# Zeroshot specifications - entire cell types go to val or test
+[zeroshot]
+
+# Fewshot specifications.
+# donor_split_0: holds out Donor1 across all 18 cell types, reusing split_0's
+# val/test cytokine partition. The `donors` field on each cell_type entry is
+# expanded by load_split into composite Donor1__<cell_type> cell_lines.
+[fewshot]
+[fewshot."parse.B_Intermediate_Memory"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.B_Naive"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.CD14_Mono"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.CD16_Mono"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.CD4_Memory"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.CD4_Naive"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.CD8_Memory"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.CD8_Naive"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.HSPC"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.ILC"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.MAIT"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.NK"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.NKT"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.NK_CD56bright"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.Plasmablast"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.Treg"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.cDC"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']
+
+[fewshot."parse.pDC"]
+donors = ["Donor1", "Donor4", "Donor9", "Donor12"]
+val = ['G-CSF', 'IFN-beta', 'M-CSF', 'IGF-1']
+test = ['C5a', 'TWEAK', 'LIF', 'IL-17C', 'FGF-beta', 'BAFF', 'FLT3L', 'IFN-lambda2', '4-1BBL', 'IL-17E', 'IL-2', 'IL-19', 'PRL', 'IL-16', 'IL-7', 'GM-CSF', 'IL-17A', 'IL-13', 'IL-36-alpha', 'PSPN', 'EPO', 'IL-9', 'IL-31', 'IL-11', 'LT-alpha1-beta2', 'TL1A', 'IL-32-beta', 'IFN-omega', 'IL-8', 'Noggin', 'IFN-epsilon', 'IL-17F', 'Leptin', 'IL-33', 'IL-35', 'OSM', 'IL-34', 'HGF', 'IL-1Ra', 'LIGHT', 'CD27L', 'SCF', 'IL-1-alpha', 'TGF-beta1', 'CD30L', 'IL-24', 'IFN-gamma', 'IFN-alpha1', 'IFN-lambda1', 'GITRL', 'VEGF', 'ADSF', 'IL-15', 'EGF', 'IL-3', 'IL-17B', 'IL-6', 'IL-4', 'IL-10', 'CT-1', 'IFN-lambda3', 'TRAIL']

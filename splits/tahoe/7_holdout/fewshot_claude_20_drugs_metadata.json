@@ -1,0 +1,28 @@
+{
+  "source_file": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260129.drug_panel_20.claude.csv",
+  "n_training_drugs": 20,
+  "training_drugs": [
+    "Alpelisib",
+    "Bortezomib",
+    "Decitabine",
+    "Dexamethasone",
+    "Dimethyl fumarate",
+    "Doxorubicin (hydrochloride)",
+    "Fulvestrant",
+    "Gefitinib",
+    "Homoharringtonine",
+    "Lenalidomide (hemihydrate)",
+    "Paclitaxel",
+    "Panobinostat",
+    "Rapamycin",
+    "Retinoic acid",
+    "Selinexor",
+    "Tofacitinib",
+    "Trametinib",
+    "olaparib",
+    "palbociclib",
+    "venetoclax"
+  ],
+  "n_test_drugs": 359,
+  "n_test_treatments": 1077
+}

@@ -1,0 +1,27 @@
+{
+  "source_file": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260202-alt-selections/high_effect_size_DEtails_method_A.csv",
+  "n_training_drugs": 19,
+  "training_drugs": [
+    "(S)-Crizotinib",
+    "AZD2858",
+    "Belzutifan",
+    "Bendamustine",
+    "DT-061",
+    "Dinaciclib",
+    "ERK5-IN-2",
+    "Elagolix sodium",
+    "Encorafenib",
+    "Everolimus",
+    "Fingolimod (hydrochloride)",
+    "Fluvoxamine (maleate)",
+    "Futibatinib",
+    "L-Eflornithine (monohydrochloride)",
+    "Lucanthone",
+    "Nimesulide",
+    "Omeprazole (sodium)",
+    "Pimozide",
+    "Raltitrexed"
+  ],
+  "n_test_drugs": 360,
+  "n_test_treatments": 1080
+}

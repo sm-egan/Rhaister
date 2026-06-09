@@ -1,0 +1,28 @@
+{
+  "source_file": "/tahoe/drive_3/ml/pod_diffusion/Code/response-calculations/20260129.diverse_drug_panel_20.biomni.csv",
+  "n_training_drugs": 20,
+  "training_drugs": [
+    "Abemaciclib",
+    "Belzutifan",
+    "Bortezomib",
+    "Celecoxib",
+    "Cyclosporin A",
+    "Dexamethasone",
+    "Dimethyl fumarate",
+    "Doxorubicin (hydrochloride)",
+    "Gemcitabine",
+    "Paclitaxel",
+    "Panobinostat",
+    "Pitavastatin (Calcium)",
+    "Rapamycin",
+    "Selinexor",
+    "Tofacitinib",
+    "Trametinib",
+    "Verapamil",
+    "Vismodegib",
+    "crizotinib",
+    "venetoclax"
+  ],
+  "n_test_drugs": 359,
+  "n_test_treatments": 1077
+}

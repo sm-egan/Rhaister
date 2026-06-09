@@ -1,0 +1,49 @@
+# Tahoe sensitivity screen dataset configuration.
+# Scalar growth-rate target per (cell_line, treatment), with transcriptional
+# panel-drug responses (pdex + cell_eval) available as predictors. The growth
+# rate is what we predict; pdex/cell_eval/genes parallel the tahoe schema so
+# the same loading code can be reused.
+
+[data]
+# Target — scalar growth rate per (cell_line, condition). Loaded by
+# prepare_sensitivity.load_data.
+parquet_path = "/nvme-shared/Data/seqrun_26_27_merged/5/qc/generic/growth_rate_long.parquet"
+
+# Predictor sources — same schema as tahoe's [data] block, so the loaders in
+# prepare_combined.py can be reused (load_pdex_data, load_cell_eval_data).
+pdex_path      = "/nvme-shared/Data/seqrun_26_27_merged/5/qc/generic/pdex_results/all_pdex.parquet"
+cell_eval_path = "/nvme-shared/Data/seqrun_26_27_merged/5/qc/generic/delta_results/all_delta.parquet"
+
+[data.columns]
+# EmeraldBay cell_eval stores the treatment in `drugname_drugconc`, while
+# prepare_combined.load_cell_eval_data defaults to `treatment` (tahoe's
+# column). This override renames it on load.
+cell_eval_treatment = "drugname_drugconc"
+
+[data.filters]
+# Applied to the scalar growth-rate target (load_data in prepare_sensitivity).
+# The same filters should be applied to pdex/cell_eval when those are wired
+# in as predictors — EmeraldBay's pdex and cell_eval contain multi-drug
+# combination rows that don't match any single-drug growth_rate condition.
+drop_null_growth = true
+drop_multi_drug  = true
+drop_drugs       = ["DMSO_T0"]   # time-zero control, not a real perturbation
+
+# Independent A/B half-replicates of the same experiment, used to compute the
+# measurement noise ceiling (a_vs_b baseline). Filters above are reused.
+[data.variants.A]
+parquet_path = "/nvme-shared/Data/seqrun_26_27_merged/5/qc/generic/split_ab/growth_rate_long_A.parquet"
+
+[data.variants.B]
+parquet_path = "/nvme-shared/Data/seqrun_26_27_merged/5/qc/generic/split_ab/growth_rate_long_B.parquet"
+
+[genes]
+# Same 2K HVG list used for tahoe pdex/cell_eval columns. Relative to this
+# directory (splits/EmeraldBay/), mirroring tahoe's convention.
+static_list = "static_2k_genes.json"
+
+[metrics]
+applicable = ["mse", "mae", "r2", "pearson"]
+
+[splits]
+default_config = "split.toml"

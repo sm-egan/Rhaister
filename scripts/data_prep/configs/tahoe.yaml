@@ -1,0 +1,42 @@
+# Tahoe-100M: 50 cell lines x ~1137 drug+dose treatments, 14 plates
+# Each h5ad file is one plate with all cell lines and treatments.
+# Pseudobulk is computed per (cell_line, treatment) within each plate,
+# with DMSO as the control condition.
+
+dataset: tahoe
+
+h5ad_dir: /nvme-shared/Data/100m_h5ad
+h5ad_pattern: "plate*_full_filtered.h5ad.gz"
+
+# Column in obs that identifies the treatment/perturbation condition
+treatment_col: drugname_drugconc
+
+# Control condition value in treatment_col
+control: "[('DMSO_TF', 0.0, 'uM')]"
+
+# Column(s) to stratify within each h5ad file.
+# Pseudobulk is computed per (group_col, treatment_col).
+# For Tahoe, each plate has multiple cell lines.
+group_col: cell_line
+
+# Optional: additional metadata columns to carry into output
+# (beyond group_col and treatment_col)
+file_id_col: null  # plate identity comes from the filename
+
+pdex:
+  output_dir: /nvme-shared/Data/100m_h5ad/pdex_results
+  threads: 32
+
+celleval:
+  # HVG mode (2K genes): uses obsm['X_hvg'], applies log1p
+  output_dir: /nvme-shared/Data/tahoe_100m_de_cell_eval
+  gene_mode: hvg
+  hvg_key: X_hvg
+  gene_name_col: gene_symbol
+
+celleval_full:
+  # Full genome mode (~63K genes): uses .X, applies normalize_total + log1p
+  output_dir: /nvme-shared/Data/tahoe_100m_de_cell_eval_full
+  gene_mode: all_genes
+  gene_name_col: gene_name
+  target_sum: 1872

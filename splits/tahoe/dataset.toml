@@ -1,0 +1,33 @@
+# Tahoe-100M drug screen — portable dataset definition.
+# Data paths are relative to the dataset root. Set RHAISTER_DATA_ROOT to point
+# at a directory with per-dataset subdirectories (e.g. $ROOT/tahoe/pdex/...).
+# Without RHAISTER_DATA_ROOT, data is auto-downloaded from HuggingFace.
+
+[data]
+pdex_path      = "pdex/all_plates_pdex.parquet"
+cell_eval_dir  = "cell_eval"
+cell_eval_glob = "plate_plate*.parquet"
+control_expression_path = "zeroshot/control_expression.parquet"
+cell_centroid_path      = "zeroshot/cell_line_centroids_dmso.parquet"
+cell_centroid_hvg_path  = "zeroshot/cell_line_centroids_dmso_hvg.parquet"
+
+# A/B independent sub-samples for noise-ceiling calibration (scripts/eval_a_vs_b.py).
+# Tahoe's A/B cell_eval is stored in legacy long format (gene_name + log2FoldChange
+# + drug + dose columns), so we flag it explicitly; pdex uses the standard schema.
+[data.variants.A]
+pdex_path        = "a_vs_b/A/pdex/all_plates_pdex.parquet"
+cell_eval_dir    = "a_vs_b/A/cell_eval"
+cell_eval_glob   = "group_A_celleval_plate*.parquet"
+cell_eval_format = "tahoe_long"
+
+[data.variants.B]
+pdex_path        = "a_vs_b/B/pdex/all_plates_pdex.parquet"
+cell_eval_dir    = "a_vs_b/B/cell_eval"
+cell_eval_glob   = "group_B_celleval_plate*.parquet"
+cell_eval_format = "tahoe_long"
+
+[genes]
+static_list = "static_2k_genes.json"
+
+[splits]
+default_config = "generalization_converted_cell_lines_3b.toml"

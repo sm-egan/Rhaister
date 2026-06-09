@@ -1,0 +1,24 @@
+# PRISM dataset configuration.
+# Same modality as RIFIVDU (scalar growth-rate per (cell_line, treatment)),
+# loaded by prepare_sensitivity.prepare_all("prism/<split>").
+
+[data]
+parquet_path = "/nvme-shared/Data/prism/growth_rate_long.parquet"
+
+[data.filters]
+drop_null_growth = true   # source has ~470K nulls in growth_rate
+drop_multi_drug  = true   # (no multi-drug rows present, but keep the guard)
+drop_drugs       = []     # no DMSO/vehicle control drug present
+
+# External primary-screen data, used by the `primary_to_secondary` baseline as
+# a real-data reference (analogous to A-vs-B for RIFIVDU but cross-experiment).
+# Schema: cell_line, drug, dose_primary, dose_secondary, primary_growth_rate,
+#         secondary_growth_rate, log_diff, abs_log_diff.
+[data.external]
+primary_screen_parquet = "/nvme-shared/Data/prism/primary-screen/primary_to_secondary_dose_match.parquet"
+
+[metrics]
+applicable = ["mse", "mae", "r2", "pearson"]
+
+[splits]
+default_config = "split.toml"
