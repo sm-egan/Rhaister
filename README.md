@@ -15,11 +15,13 @@ datasets:
 
 # Rhaister
 
-**Observed statistics are sufficient to predict drug responses**
+**Back to basics: Observed statistics are sufficient to predict drug responses**
 
-Rhaister predicts perturbation responses in unseen (cell, perturbation) combinations from aggregated summary statistics. It operates directly on the output of standard single-cell analysis pipelines — log2 fold change, Mann-Whitney U-test p-values, and expression deltas — enabling training in seconds and prediction in milliseconds.
+Rhaister predicts perturbation responses in unseen (cell, perturbation) combinations from aggregated summary statistics.
+It operates directly on the output of standard single-cell analysis pipelines — log2 fold change, 
+Mann-Whitney U-test p-values, and expression deltas — enabling training in seconds and prediction in milliseconds.
 
-> Paper: Predicting drug responses in new biological contexts (2026)
+![img](plots/Rhaister_arch.png)
 
 ## Overview
 
@@ -53,6 +55,8 @@ For entirely unseen cell lines with no perturbation panel, Rhaister-O uses only 
 where *x* is the baseline pseudobulk expression. See [docs/zeroshot_architecture.md](docs/zeroshot_architecture.md) for the full model description.
 
 ## Datasets
+
+![img](plots/Rhaister_split.png)
 
 | Dataset                                                                               | Contexts | Perturbations | Modality |
 |---------------------------------------------------------------------------------------|----------|---------------|----------|
@@ -137,7 +141,7 @@ If you use Rhaister in your work, please cite:
 
 ```
 @article{rhaister2026,
-  title={Predicting drug responses in new biological contexts},
+  title={Back to basics: Observed statistics are sufficient to predict drug responses},
   year={2026},
   publisher={Tahoe Bio}
 }
