@@ -1,0 +1,9 @@
+{
+  "name": "Rhaister",
+  "description": "Perturbation response prediction from observed summary statistics",
+  "homepage": "https://huggingface.co/tahoebio/Rhaister",
+  "repository": "https://github.com/tahoebio/Rhaister",
+  "paper": "https://tahoebio-assets.com/rhaister-manuscript.pdf",
+  "license": "apache-2.0",
+  "version": "0.1.0"
+}
