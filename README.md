@@ -1,3 +1,18 @@
+---
+license: apache-2.0
+tags:
+- biology
+- single-cell
+- perturbation
+- drug-response
+- genomics
+datasets:
+- tahoebio/EmeraldBay
+- tahoebio/replogle-nadig-de-rhaister
+- tahoebio/tahoe-de-rhaister
+- tahoebio/parse-de-rhaister
+---
+
 # Rhaister
 
 **Observed statistics are sufficient to predict drug responses**
