@@ -22,15 +22,36 @@ RESULTS_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 
 # Back-compat: default to tahoe dataset for module-level constants that other
 # code may reference. Dataset-specific loaders below resolve these per-split.
-_DEFAULT_DATASET_CFG = load_dataset_config("tahoe")
-DATA_PATH = _DEFAULT_DATASET_CFG["pdex_path"]
-GENE_LIST = _DEFAULT_DATASET_CFG["gene_list"]
+# Resolution is lazy so that merely importing this module does not trigger a
+# HuggingFace dataset download — it happens on first actual use instead.
+_DEFAULT_DATASET_CFG_CACHE = None
+
+
+def _default_dataset_cfg():
+    global _DEFAULT_DATASET_CFG_CACHE
+    if _DEFAULT_DATASET_CFG_CACHE is None:
+        _DEFAULT_DATASET_CFG_CACHE = load_dataset_config("tahoe")
+    return _DEFAULT_DATASET_CFG_CACHE
+
+
+def __getattr__(name):
+    # PEP 562: expose the historical module-level constants lazily so that
+    # `rhaister.prepare.DATA_PATH` / `.GENE_LIST` / `._DEFAULT_DATASET_CFG`
+    # keep working without resolving (and possibly downloading) the dataset at
+    # import time.
+    if name == "_DEFAULT_DATASET_CFG":
+        return _default_dataset_cfg()
+    if name == "DATA_PATH":
+        return _default_dataset_cfg()["pdex_path"]
+    if name == "GENE_LIST":
+        return _default_dataset_cfg()["gene_list"]
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 def load_data(dataset_cfg=None):
     """Load pdex parquet (long format), filter to static gene set, pivot to wide."""
     if dataset_cfg is None:
-        dataset_cfg = _DEFAULT_DATASET_CFG
+        dataset_cfg = _default_dataset_cfg()
     with open(dataset_cfg["gene_list"]) as f:
         static_genes = json.load(f)
 

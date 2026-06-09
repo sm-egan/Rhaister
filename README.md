@@ -94,10 +94,12 @@ All numbers are reproducible from the code in this repository. See [CLAUDE.md](C
 ## Installation
 
 ```bash
+git clone https://huggingface.co/tahoebio/Rhaister
+cd Rhaister
 uv pip install -e ".[dev]"
 ```
 
-Data is loaded automatically from [HuggingFace](https://huggingface.co/tahoebio) when not available locally. Set `RHAISTER_DATA_ROOT` to point to a local data directory.
+Data is loaded automatically from [HuggingFace](https://huggingface.co/tahoebio) the first time a dataset is used, and cached locally thereafter. Set `RHAISTER_DATA_ROOT` to point to a local data directory to use existing data instead.
 
 ## Usage
 
