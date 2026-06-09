@@ -95,11 +95,30 @@ All numbers are reproducible from the code in this repository. See [CLAUDE.md](C
 
 ## Installation
 
+Download the repository from the HuggingFace Hub and install it:
+
+```python
+from huggingface_hub import snapshot_download
+
+# Download the full repo into ./Rhaister
+snapshot_download("tahoebio/Rhaister", local_dir="Rhaister")
+```
+
+```bash
+cd Rhaister
+uv pip install -e ".[dev]"
+```
+
+<details>
+<summary>Alternative: install with <code>git clone</code></summary>
+
 ```bash
 git clone https://huggingface.co/tahoebio/Rhaister
 cd Rhaister
 uv pip install -e ".[dev]"
 ```
+
+</details>
 
 Data is loaded automatically from [HuggingFace](https://huggingface.co/tahoebio) the first time a dataset is used, and cached locally thereafter. Set `RHAISTER_DATA_ROOT` to point to a local data directory to use existing data instead.
 
