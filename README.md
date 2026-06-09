@@ -17,6 +17,8 @@ datasets:
 
 **Back to basics: Observed statistics are sufficient to predict drug responses**
 
+📄 [Read the paper](https://tahoebio-assets.com/rhaister-manuscript.pdf)
+
 Rhaister predicts perturbation responses in unseen (cell, perturbation) combinations from aggregated summary statistics.
 It operates directly on the output of standard single-cell analysis pipelines — log2 fold change, 
 Mann-Whitney U-test p-values, and expression deltas — enabling training in seconds and prediction in milliseconds.
@@ -145,7 +147,8 @@ If you use Rhaister in your work, please cite:
 @article{rhaister2026,
   title={Back to basics: Observed statistics are sufficient to predict drug responses},
   year={2026},
-  publisher={Tahoe Bio}
+  publisher={Tahoe Bio},
+  url={https://tahoebio-assets.com/rhaister-manuscript.pdf}
 }
 ```
 
