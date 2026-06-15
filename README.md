@@ -17,7 +17,7 @@ datasets:
 
 **Back to basics: Observed statistics are sufficient to predict drug responses**
 
-📄 [Read the paper](https://tahoebio-assets.com/rhaister-manuscript.pdf)
+📄 [Read the paper](https://www.biorxiv.org/content/10.64898/2026.06.09.731197v1.full.pdf)
 
 Rhaister predicts perturbation responses in unseen (cell, perturbation) combinations from aggregated summary statistics.
 It operates directly on the output of standard single-cell analysis pipelines — log2 fold change, 
@@ -163,11 +163,13 @@ docs/                      # Architecture docs, zeroshot model description
 If you use Rhaister in your work, please cite:
 
 ```
-@article{rhaister2026,
+@article{svensson2026back,
   title={Back to basics: Observed statistics are sufficient to predict drug responses},
+  author={Svensson, Valentine and Khan, Umair and Heydari, Hamed and Ubas, Airol A and Thomas, Nicole and Merico, Daniele and Goodarzi, Hani and Yu, John and Alidoust, Nima and Gandhi, Shreshth},
+  journal={bioRxiv},
+  pages={2026--06},
   year={2026},
-  publisher={Tahoe Bio},
-  url={https://tahoebio-assets.com/rhaister-manuscript.pdf}
+  publisher={Cold Spring Harbor Laboratory}
 }
 ```
 
