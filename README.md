@@ -169,7 +169,9 @@ If you use Rhaister in your work, please cite:
   journal={bioRxiv},
   pages={2026--06},
   year={2026},
-  publisher={Cold Spring Harbor Laboratory}
+  publisher={Cold Spring Harbor Laboratory},
+  doi={10.64898/2026.06.09.731197},
+  url={https://doi.org/10.64898/2026.06.09.731197}
 }
 ```
 
