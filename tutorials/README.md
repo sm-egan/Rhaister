@@ -8,25 +8,34 @@ model → the State-paper metrics, with every step visible.
 It runs on **public data with no credentials**. Nothing here needs cluster
 access, a GitHub token, or `HF_TOKEN`.
 
+### This is an adapted version
+
+The walkthrough as originally written could not run outside Tahoe Bio: its setup
+cell prompted for a GitHub token and cloned a repo that returns 404, the
+`sample_tahoe.h5ad` every later step needed was never published, and step 3
+imported a private symbol from `cell-eval`, which is in none of the repo's
+dependency sets.
+
+This version fixes all three, and **has not been contributed upstream**. So:
+
+- Re-downloading `tahoebio/Rhaister` gets the *original* notebook, not this one.
+- This notebook needs the checkout it came with — specifically
+  `rhaister/tutorial_data.py`, which does not exist upstream. The setup cell
+  looks for that file and stops with an explanation if it can't find it, rather
+  than failing obscurely a few cells later.
+
 ### Running it
 
-Locally, from a checkout:
+From this checkout:
 
 ```bash
 uv pip install -e ".[tutorial]"
 jupyter lab tutorials/rhaister_walkthrough.ipynb
 ```
 
-In Colab, fetch the notebook from the Hub and open it (**File → Open notebook →
-Upload**):
-
-```python
-from huggingface_hub import hf_hub_download
-hf_hub_download("tahoebio/Rhaister", "tutorials/rhaister_walkthrough.ipynb", local_dir=".")
-```
-
-The notebook's setup cell installs the package itself if it isn't already
-importable, so a bare Colab runtime works.
+In Colab, upload this checkout (or otherwise make it reachable) and point
+`RHAISTER_REPO` at it before running the setup cell. A bare Colab runtime with
+nothing but the notebook will not work until these changes are upstream.
 
 ### The two data paths
 
