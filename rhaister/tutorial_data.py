@@ -436,7 +436,7 @@ def fetch_de_subset(
     frames = _align_frames(fc, pv, fdr, ref, delta, gene_panel)
     if cache_path:
         os.makedirs(os.path.dirname(os.path.abspath(cache_path)), exist_ok=True)
-        _pack_subset(*frames).to_parquet(cache_path, index=False)
+        _pack_subset(*frames).to_parquet(cache_path, index=False, compression="zstd")
         if verbose:
             print(f"  cached to {cache_path}")
     return frames
@@ -475,11 +475,17 @@ def _pack_subset(fc, pv, fdr, ref, delta):
     """
     parts = []
     for name, df in zip(_SUBSET_MATRICES, (fc, pv, fdr, ref, delta)):
-        part = df.copy()
-        genes = [c for c in part.columns if c not in ("cell_line", "treatment")]
-        part[genes] = part[genes].astype(np.float32)
-        part.insert(0, "matrix", name)
-        parts.append(part)
+        genes = [c for c in df.columns if c not in ("cell_line", "treatment")]
+        parts.append(
+            pd.concat(
+                [
+                    pd.DataFrame({"matrix": name}, index=df.index),
+                    df[["cell_line", "treatment"]],
+                    df[genes].astype(np.float32),
+                ],
+                axis=1,
+            )
+        )
     return pd.concat(parts, ignore_index=True)
 
 
