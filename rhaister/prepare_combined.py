@@ -319,11 +319,19 @@ def load_pdex_data(dataset_cfg):
     )
     print(f"  Filtered to {len(long_df)} rows ({long_df['feature'].nunique()} genes)")
 
+    return _pivot_pdex_long(long_df)
+
+
+def _pivot_pdex_long(long_df, verbose=True):
+    """Pivot long pdex rows (cell_line, target, feature, ...) into the four wide
+    (observations x genes) frames Rhaister consumes: fold change, p-value, FDR,
+    reference mean. Shared by load_pdex_data and tutorial_data.fetch_de_subset."""
     # fold_change is log2(target_mean / ref_mean); handle inf from log2(0)
     long_df["fold_change"] = long_df["fold_change"].replace([np.inf, -np.inf], np.nan)
 
     # Pivot to wide format: mean fold_change, min p_value, min fdr, mean ref_mean across plates
-    print("  Pivoting to wide format...")
+    if verbose:
+        print("  Pivoting to wide format...")
     fc_wide = long_df.pivot_table(
         index=["cell_line", "target"],
         columns="feature",
