@@ -1,0 +1,108 @@
+# Tutorials
+
+## `rhaister_walkthrough.ipynb`
+
+Raw single-cell counts → differential-expression summaries → a trained Rhaister
+model → the State-paper metrics, with every step visible.
+
+It runs on **public data with no credentials**. Nothing here needs cluster
+access, a GitHub token, or `HF_TOKEN`.
+
+### Running it
+
+Locally, from a checkout:
+
+```bash
+uv pip install -e ".[tutorial]"
+jupyter lab tutorials/rhaister_walkthrough.ipynb
+```
+
+In Colab, fetch the notebook from the Hub and open it (**File → Open notebook →
+Upload**):
+
+```python
+from huggingface_hub import hf_hub_download
+hf_hub_download("tahoebio/Rhaister", "tutorials/rhaister_walkthrough.ipynb", local_dir=".")
+```
+
+The notebook's setup cell installs the package itself if it isn't already
+importable, so a bare Colab runtime works.
+
+### The two data paths
+
+Set `DATA_MODE` in the setup section.
+
+| `DATA_MODE` | Step 3 (the `AnnData → matrices` bridge) | Steps 4-6 (training) | First-run cost |
+|---|---|---|---|
+| `"fixture"` *(default)* | `tests/fixtures/plate1_CVCL_0023_100genes.h5ad` — 14,896 cells, 1 cell line, 91 drugs, 100 genes | `data/tahoe_walkthrough_de_subset.parquet`, bundled here | none |
+| `"tahoe100m"` | `sample_tahoe.h5ad`, rebuilt from `tahoebio/Tahoe-100M` | the matrices step 3 computed | a few hundred MB, ~10 min |
+
+`"fixture"` is offline and takes a couple of minutes end to end. Its single cell
+line cannot train the model — a per-cell ridge needs several to regress against —
+so steps 4-6 use a published slice of 8 cell lines × 24 drugs instead. Step 3
+earns its keep there by checking its computed deltas against the published
+values for that cell line (mean per-gene *r* > 0.999), which is what shows the
+notebook is teaching the production pipeline rather than a lookalike.
+
+`"tahoe100m"` is the full story on one dataset: single cells in, metrics out.
+
+### Where the data comes from
+
+Everything is public.
+
+| What | Source | Size |
+|---|---|---|
+| Bundled DE subset | slice of `tahoebio/tahoe-de-rhaister` | 7 MB, committed here |
+| Test fixture | committed in `tests/fixtures/` | 5.5 MB |
+| Raw single cells (`"tahoe100m"`) | `tahoebio/Tahoe-100M` | ~3,388 shards; the builder reads a few |
+
+The full `tahoebio/tahoe-de-rhaister` dataset is **41.8 GB**, almost all of it a
+single 40.6 GB pdex parquet, so the notebook never calls `snapshot_download` on
+it. `rhaister.tutorial_data.fetch_de_subset` instead prunes that parquet's row
+groups using its footer statistics — it is clustered by `(plate, cell_line,
+target)` — and reads only the few dozen covering the request. If you have the
+data locally, set `RHAISTER_DATA_ROOT` and it is used in preference to the Hub,
+the same precedence `prepare_combined` uses.
+
+Note that in Tahoe **the plate encodes the dose**: plate 1 is the 0.05 µM arm,
+plate 2 the 0.5 µM arm. A plate and a dose argument that disagree will match
+nothing.
+
+### Rebuilding the inputs
+
+```bash
+# Rebuild sample_tahoe.h5ad from the public Tahoe-100M shards
+python scripts/build_example_h5ad.py --out sample_tahoe.h5ad
+
+# Rebuild the bundled DE subset (only needed if the default slice changes)
+python -c "
+from rhaister.tutorial_data import *
+fetch_de_subset(WALKTHROUGH_PLATE, WALKTHROUGH_CELL_LINES, walkthrough_treatments(),
+                load_gene_panel('tahoe'), cache_path=BUNDLED_SUBSET, use_bundled=False)
+"
+```
+
+### Expected numbers
+
+On the default slice — 192 observations, 8 held out — the walkthrough lands near:
+
+| Metric | Walkthrough | Paper (5 holdouts, full data) |
+|---|---|---|
+| `state/pearson_delta_mean` | ~0.85 | 0.87 |
+| `state/spearman_lfc_sig_mean` | ~0.81 | 0.81 |
+| `state/pr_auc_mean` | ~0.67 | 0.73 |
+| `state/de_overlap_mean` | ~0.61 | 0.59 |
+
+Close, but these are a small subsample scored on 8 test observations — treat
+them as a smoke test of the pipeline, not as a reproduction of the paper. For
+that, see the reproduction steps in `CLAUDE.md`.
+
+### Testing
+
+`tests/test_tutorial_data.py` covers the loaders offline. The tests that reach
+the Hub are skipped unless you opt in:
+
+```bash
+python -m pytest tests/test_tutorial_data.py -v
+RHAISTER_TEST_NETWORK=1 python -m pytest tests/test_tutorial_data.py -v
+```
