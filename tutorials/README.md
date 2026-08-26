@@ -84,18 +84,26 @@ fetch_de_subset(WALKTHROUGH_PLATE, WALKTHROUGH_CELL_LINES, walkthrough_treatment
 
 ### Expected numbers
 
-On the default slice — 192 observations, 8 held out — the walkthrough lands near:
+Both paths use the same 192 observations with 8 held out, but they get their
+matrices from different places, and it shows:
 
-| Metric | Walkthrough | Paper (5 holdouts, full data) |
-|---|---|---|
-| `state/pearson_delta_mean` | ~0.85 | 0.87 |
-| `state/spearman_lfc_sig_mean` | ~0.81 | 0.81 |
-| `state/pr_auc_mean` | ~0.67 | 0.73 |
-| `state/de_overlap_mean` | ~0.61 | 0.59 |
+| Metric | `"fixture"` | `"tahoe100m"` | Paper (5 holdouts, full data) |
+|---|---|---|---|
+| `state/pearson_delta_mean` | 0.854 | 0.744 | 0.87 |
+| `state/spearman_lfc_sig_mean` | 0.811 | 0.667 | 0.81 |
+| `state/pr_auc_mean` | 0.671 | 0.318 | 0.73 |
+| `state/de_overlap_mean` | 0.613 | 0.137 | 0.59 |
 
-Close, but these are a small subsample scored on 8 test observations — treat
-them as a smoke test of the pipeline, not as a reproduction of the paper. For
-that, see the reproduction steps in `CLAUDE.md`.
+`"fixture"` trains on the **published** DE summaries, computed from every cell on
+the plate, so it lands close to the paper. `"tahoe100m"` recomputes them from at
+most `--cells-per-group` cells (100 by default, against thousands in the real
+pipeline), so its p-values and FDRs are far noisier — which hits the two
+significance-dependent metrics, PR-AUC and DE overlap, hardest. Raising
+`--cells-per-group` closes most of the gap at the cost of a longer build.
+
+Either way these are a small subsample scored on 8 test observations: a smoke
+test of the pipeline, not a reproduction of the paper. For that, see the
+reproduction steps in `CLAUDE.md`.
 
 ### Testing
 
