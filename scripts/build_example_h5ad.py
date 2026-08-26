@@ -27,6 +27,8 @@ Usage
 """
 
 import argparse
+import bisect
+import collections
 import json
 import os
 import sys
@@ -69,11 +71,28 @@ def load_sample_metadata(plate, verbose=True):
     fs = HfFileSystem()
     if verbose:
         print(f"Reading sample metadata for {plate}...")
-    tbl = pq.read_table(
-        fs.open(f"datasets/{HF_REPO}/metadata/obs_metadata.parquet", "rb"),
-        columns=["plate", "sample", "drug", "drugname_drugconc"],
-    )
-    df = tbl.to_pandas().drop_duplicates()
+
+    pf = pq.ParquetFile(fs.open(f"datasets/{HF_REPO}/metadata/obs_metadata.parquet", "rb"))
+    md = pf.metadata
+    names = [md.schema.column(i).name for i in range(md.num_columns)]
+    pi = names.index("plate")
+
+    # obs_metadata is 2.3 GB over 96 row groups, but it is grouped by plate and
+    # the four columns wanted here are dictionary-encoded. Reading only the
+    # plate's own row groups turns this into a few MB of range requests.
+    groups = []
+    for g in range(md.num_row_groups):
+        st = md.row_group(g).column(pi).statistics
+        if st is None or st.min <= plate <= st.max:
+            groups.append(g)
+    if verbose:
+        print(f"  {len(groups)}/{md.num_row_groups} row groups hold {plate}")
+
+    cols = ["plate", "sample", "drug", "drugname_drugconc"]
+    df = pd.concat(
+        [pf.read_row_group(g, columns=cols).to_pandas().drop_duplicates() for g in groups],
+        ignore_index=True,
+    ).drop_duplicates()
     df = df[df["plate"].astype(str) == plate]
     if df.empty:
         raise ValueError(f"No samples found for plate {plate!r}.")
@@ -153,8 +172,14 @@ def find_plate_shards(fs, plate, stride=8, threads=16, verbose=True):
 
 
 def select_row_groups(fs, shards, samples, threads=16, verbose=True):
-    """(shard, row_group) pairs whose `sample` statistics overlap `samples`."""
-    lo, hi = min(samples), max(samples)
+    """(shard, row_group) pairs whose `sample` statistics cover a wanted sample.
+
+    Testing containment per row group — not overlap with the whole wanted range —
+    matters: the wanted samples are scattered across the plate's sample ids, so a
+    range test keeps nearly every row group, while containment keeps only the
+    quarter that actually hold the requested drugs.
+    """
+    ordered = sorted(samples)
 
     def scan(i):
         md = _shard_footer(fs, i)
@@ -163,7 +188,13 @@ def select_row_groups(fs, shards, samples, threads=16, verbose=True):
         out = []
         for g in range(md.num_row_groups):
             st = md.row_group(g).column(si).statistics
-            if st is None or not (st.max < lo or st.min > hi):
+            if st is None:
+                out.append((i, g))
+                continue
+            # Any wanted sample inside [min, max]? Row groups span a handful of
+            # samples, so this is a tight test.
+            k = bisect.bisect_left(ordered, st.min)
+            if k < len(ordered) and ordered[k] <= st.max:
                 out.append((i, g))
         return out
 
@@ -183,15 +214,33 @@ def select_row_groups(fs, shards, samples, threads=16, verbose=True):
 
 def collect_cells(
     fs, selected, sample_to_treatment, sample_to_drug, cell_lines, treatments,
-    cells_per_group, token_to_col, n_panel, verbose=True,
+    cells_per_group, token_to_col, n_panel, stall_limit=150, stall_cells=25, verbose=True,
 ):
     """Read selected row groups, keeping up to `cells_per_group` cells per
     (cell_line, treatment). Returns (rows, obs_records) where rows are CSR
-    pieces already projected onto the panel gene axis."""
+    pieces already projected onto the panel gene axis.
+
+    Stops when every group is full, or when the last `stall_limit` row groups
+    yielded fewer than `stall_cells` cells between them. The tail of the scan is
+    otherwise dominated by hunting for a handful of (cell_line, treatment) pairs
+    that were sparsely sampled on the plate and may never fill — a plain
+    consecutive-miss counter does not end it, because stray single cells keep
+    resetting it.
+    """
     cell_lines, treatments = set(cell_lines), set(treatments)
     counts = {}
     rows, obs = [], []
     t0 = time.time()
+    open_shards = {}
+    recent = collections.deque(maxlen=stall_limit)
+
+    def shard_reader(i):
+        # Row groups from one shard arrive consecutively; reopening per row group
+        # would re-read the footer every time.
+        if i not in open_shards:
+            open_shards.clear()
+            open_shards[i] = pq.ParquetFile(fs.open(f"datasets/{HF_REPO}/{SHARD_FMT.format(i=i)}", "rb"))
+        return open_shards[i]
 
     for n, (shard, group) in enumerate(selected, 1):
         need = sum(
@@ -203,9 +252,19 @@ def collect_cells(
             if verbose:
                 print("  all groups filled — stopping early")
             break
+        if len(recent) == recent.maxlen and sum(recent) < stall_cells:
+            if verbose:
+                print(
+                    f"  only {sum(recent)} cells in the last {stall_limit} row groups "
+                    "— stopping"
+                )
+            break
 
-        pf = pq.ParquetFile(fs.open(f"datasets/{HF_REPO}/{SHARD_FMT.format(i=shard)}", "rb"))
-        tbl = pf.read_row_group(group, columns=["genes", "expressions", "sample", "cell_line_id"])
+        before = len(obs)
+
+        tbl = shard_reader(shard).read_row_group(
+            group, columns=["genes", "expressions", "sample", "cell_line_id"]
+        )
         chunk = tbl.to_pydict()
 
         for genes, exprs, sample, cell in zip(
@@ -241,6 +300,8 @@ def collect_cells(
                 "tscp_count": float(sum(exprs)),
             })
             counts[key] = counts.get(key, 0) + 1
+
+        recent.append(len(obs) - before)
 
         if verbose:
             filled = sum(1 for v in counts.values() if v >= cells_per_group)
@@ -285,6 +346,7 @@ def build(args):
         fs, selected, sample_to_treatment, sample_to_drug,
         args.cell_lines, treatments, args.cells_per_group,
         token_to_col, len(gene_panel),
+        stall_limit=args.stall_limit, stall_cells=args.stall_cells,
     )
     if not rows:
         raise ValueError("No cells matched the request.")
@@ -328,6 +390,10 @@ def main():
     p.add_argument("--drugs", nargs="+", default=WALKTHROUGH_DRUGS, help="drug names to keep")
     p.add_argument("--cells-per-group", type=int, default=200, help="cap per (cell_line, treatment)")
     p.add_argument("--min-cells-per-group", type=int, default=25, help="warn below this many cells")
+    p.add_argument("--stall-limit", type=int, default=150,
+                   help="window of row groups used for the stall check")
+    p.add_argument("--stall-cells", type=int, default=25,
+                   help="stop when the stall window yields fewer than this many cells")
     args = p.parse_args()
     build(args)
 
