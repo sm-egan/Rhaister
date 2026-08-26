@@ -39,6 +39,15 @@ data-prep = [
     "pdex>=0.2",
     "pyyaml",
 ]
+# tutorials/rhaister_walkthrough.ipynb. Deliberately no `cell-eval`: the
+# walkthrough computes expression deltas through scripts/data_prep/, the same
+# code that produced the published parquets.
+tutorial = [
+    "anndata",
+    "pdex>=0.2",
+    "matplotlib",
+    "jupyter",
+]
 
 # =============================================================================
 # TOOL CONFIGURATIONS
