@@ -122,6 +122,17 @@ uv pip install -e ".[dev]"
 
 Data is loaded automatically from [HuggingFace](https://huggingface.co/tahoebio) the first time a dataset is used, and cached locally thereafter. Set `RHAISTER_DATA_ROOT` to point to a local data directory to use existing data instead.
 
+## Tutorial
+
+[`tutorials/rhaister_walkthrough.ipynb`](tutorials/rhaister_walkthrough.ipynb) goes from raw single-cell counts to differential-expression summaries to a trained model and the six State metrics, making each step explicit. It runs on public data with no credentials, and the default path needs no download at all.
+
+```bash
+uv pip install -e ".[tutorial]"
+jupyter lab tutorials/rhaister_walkthrough.ipynb
+```
+
+See [`tutorials/README.md`](tutorials/README.md) for the two data paths and where each input comes from.
+
 ## Usage
 
 ```bash
