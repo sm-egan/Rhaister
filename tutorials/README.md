@@ -13,8 +13,8 @@ access, a GitHub token, or `HF_TOKEN`.
 The walkthrough as originally written could not run outside Tahoe Bio: its setup
 cell prompted for a GitHub token and cloned a repo that returns 404, the
 `sample_tahoe.h5ad` every later step needed was never published, and step 3
-imported a private symbol from `cell-eval`, which is in none of the repo's
-dependency sets.
+reached into `cell-eval` (a public package, but via the private
+`cell_eval._evaluator._convert_to_normlog`) which no dependency list declares.
 
 This version fixes all three, and **has not been contributed upstream**. So:
 

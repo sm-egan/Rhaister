@@ -40,8 +40,10 @@ data-prep = [
     "pyyaml",
 ]
 # tutorials/rhaister_walkthrough.ipynb. Deliberately no `cell-eval`: the
-# walkthrough computes expression deltas through scripts/data_prep/, the same
-# code that produced the published parquets.
+# walkthrough computes expression deltas through scripts/data_prep/, which is
+# what produced the published parquets. cell-eval is a fine package, but it is
+# not that code path, and its normalization differs (median target vs the
+# target_sum=1872 pinned in configs/tahoe.yaml).
 tutorial = [
     "anndata",
     "pdex>=0.2",
