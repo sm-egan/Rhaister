@@ -14,7 +14,7 @@ datasets:
 ---
 
 # Rhaister
->[!BRANCHES]
+>[!NOTE]
 >The main branch is an unmodified clone of Tahoe Bio's [Rhaister repository on Hugging Face](https://huggingface.co/tahoebio/Rhaister). The default branch fix/walkthrough-public-data contains a modified version of the [Rhaister walkthrough tutorial](tutorials/rhaister-walkthrough.ipynb). I created this because I was initially unable to run this tutorial, as the original repository version pointed to a data source that was not publicly available. The goal was to enable anyone who accesses the public repo to run the tutorial on their own device. See the tutorials [README.md](tutorials/README.md) for details on data sources. Minimal changes were  made to the tutorial outside of the data loading.
 
 **Back to basics: Observed statistics are sufficient to predict drug responses**
